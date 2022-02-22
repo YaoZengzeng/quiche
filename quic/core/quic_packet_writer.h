@@ -37,6 +37,8 @@ struct QUIC_EXPORT_PRIVATE PerPacketOptions {
 // An interface between writers and the entity managing the
 // socket (in our case the QuicDispatcher).  This allows the Dispatcher to
 // control writes, and manage any writers who end up write blocked.
+// 在writers和管理socket（在我们这种情况下是QuicDispatcher）的实体之间的一个接口
+// 这允许Dispatcher来控制写入，并且管理最后会阻塞的writers
 // A concrete writer works in one of the two modes:
 // - PassThrough mode. This is the default mode. Caller calls WritePacket with
 //   caller-allocated packet buffer. Unless the writer is blocked, each call to

@@ -25,6 +25,7 @@ class QUIC_EXPORT_PRIVATE QuicSpdyClientSession
  public:
   // Takes ownership of |connection|. Caller retains ownership of
   // |promised_by_url|.
+  // 接过|connection|的所有权
   QuicSpdyClientSession(const QuicConfig& config,
                         const ParsedQuicVersionVector& supported_versions,
                         QuicConnection* connection,

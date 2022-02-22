@@ -2790,6 +2790,7 @@ void QuicConnection::ProcessUdpPacket(const QuicSocketAddress& self_address,
   }
 
   // Ensure the time coming from the packet reader is within 2 minutes of now.
+  // 确认来自packet reader的时间是在两分钟之内的
   if (std::abs((packet.receipt_time() - clock_->ApproximateNow()).ToSeconds()) >
       2 * 60) {
     QUIC_BUG(quic_bug_10511_21)
@@ -2805,6 +2806,7 @@ void QuicConnection::ProcessUdpPacket(const QuicSocketAddress& self_address,
   if (!framer_.ProcessPacket(packet)) {
     // If we are unable to decrypt this packet, it might be
     // because the CHLO or SHLO packet was lost.
+    // 如果我们不能解密这个包，可能是因为CHLO或者SHLO丢失了
     QUIC_DVLOG(1) << ENDPOINT
                   << "Unable to process packet.  Last packet processed: "
                   << last_header_.packet_number;

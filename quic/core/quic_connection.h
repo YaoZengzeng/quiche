@@ -466,6 +466,9 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   // |initial_peer_address| using |writer| to write packets. |owns_writer|
   // specifies whether the connection takes ownership of |writer|. |helper| must
   // outlive this connection.
+  // 构建一个新的QuicConnection，基于|connection_id|和|initial_peer_address|，使用|writer|
+  // 来写入包，|owns_writer|指定了connection是否接过|writer|的所有权，|helper|必须在这个连接
+  // 的生命周期之外
   QuicConnection(QuicConnectionId server_connection_id,
                  QuicSocketAddress initial_self_address,
                  QuicSocketAddress initial_peer_address,
@@ -587,7 +590,9 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   }
 
   // Called when the caller thinks it's worth a try to write.
+  // 到调用者认为值得尝试写入的时候被调用
   // TODO(fayang): consider unifying this with QuicSession::OnCanWrite.
+  //考虑和QuicSession::OnCanWrite进行统一
   virtual void OnCanWrite();
 
   // Called when an error occurs while attempting to write a packet to the
@@ -1077,6 +1082,7 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   bool IsPathDegrading() const { return is_path_degrading_; }
 
   // Attempts to process any queued undecryptable packets.
+  // 试着处理任何队列中为解密的包
   void MaybeProcessUndecryptablePackets();
 
   // Queue a coalesced packet.

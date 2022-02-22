@@ -294,6 +294,7 @@ class QUIC_EXPORT_PRIVATE QuicEncryptedPacket : public QuicData {
 };
 
 // A received encrypted QUIC packet, with a recorded time of receipt.
+// 一个接收到的加密的QUIC包，有着接收的时间戳
 class QUIC_EXPORT_PRIVATE QuicReceivedPacket : public QuicEncryptedPacket {
  public:
   QuicReceivedPacket(const char* buffer, size_t length, QuicTime receipt_time);
