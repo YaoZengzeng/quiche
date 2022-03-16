@@ -72,6 +72,7 @@ struct QUIC_EXPORT_PRIVATE QuicConnectionContext final {
 
 // QuicConnectionContextSwitcher is a RAII object used for maintaining the
 // thread-local QuicConnectionContext pointer.
+// QuicConnectionContextSwitcher是一个RAII对象，用于维护thread-local的QuicConnectionContext pointer
 class QUIC_EXPORT_PRIVATE QuicConnectionContextSwitcher final {
  public:
   // The constructor switches from QuicConnectionContext::Current() to

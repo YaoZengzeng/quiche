@@ -784,7 +784,9 @@ bool QuicSession::HasPendingHandshake() const {
 void QuicSession::ProcessUdpPacket(const QuicSocketAddress& self_address,
                                    const QuicSocketAddress& peer_address,
                                    const QuicReceivedPacket& packet) {
+  // 获取connection的context
   QuicConnectionContextSwitcher cs(connection_->context());
+  // 调用内部的connection_的ProcessUdpPacket进行处理
   connection_->ProcessUdpPacket(self_address, peer_address, packet);
 }
 
@@ -1670,6 +1672,7 @@ void QuicSession::OnTlsHandshakeComplete() {
       perspective_ == Perspective::IS_SERVER) {
     // Server sends HANDSHAKE_DONE to signal confirmation of the handshake
     // to the client.
+    // Server发送HANDSHAKE_DONE来通知client handshake已经确认了
     control_frame_manager_.WriteOrBufferHandshakeDone();
     if (connection()->version().HasIetfQuicFrames()) {
       MaybeSendAddressToken();

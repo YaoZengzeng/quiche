@@ -65,6 +65,7 @@ const size_t kMaxAckBlocks = (1 << (kNumberOfAckBlocksSize * 8)) - 1;
 
 // This class receives callbacks from the framer when packets
 // are processed.
+// 这个类从framer接受callbacks，当packets被处理的时候
 class QUIC_EXPORT_PRIVATE QuicFramerVisitorInterface {
  public:
   virtual ~QuicFramerVisitorInterface() {}
@@ -261,6 +262,8 @@ class QUIC_EXPORT_PRIVATE QuicFramerVisitorInterface {
 
 // Class for parsing and constructing QUIC packets.  It has a
 // QuicFramerVisitorInterface that is called when packets are parsed.
+// 用于解析以及构造QUIC packets的类，它有一个QuicFramerVisitorInterface
+// 当packets解析的时候被调用
 class QUIC_EXPORT_PRIVATE QuicFramer {
  public:
   // Constructs a new framer that installs a kNULL QuicEncrypter and

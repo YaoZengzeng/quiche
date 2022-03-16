@@ -403,6 +403,7 @@ class QUIC_NO_EXPORT QuicDispatcher
       const ReceivedPacketInfo& packet_info);
 
   // Deliver |packets| to |session| for further processing.
+  // 将|packets|传递到|session|用于后续处理
   void DeliverPacketsToSession(
       const std::list<QuicBufferedPacketStore::BufferedPacket>& packets,
       QuicSession* session);

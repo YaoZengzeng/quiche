@@ -37,6 +37,7 @@ class QUIC_EXPORT_PRIVATE HandshakerDelegateInterface {
 
   // Called when both 1-RTT read and write keys are available. Only used in TLS
   // handshake.
+  // 当1-RTT的读写keys都可用的时候被调用，只在TLS handshake的时候使用
   virtual void OnTlsHandshakeComplete() = 0;
 
   // Called to discard old decryption keys to stop processing packets of

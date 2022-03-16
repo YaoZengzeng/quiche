@@ -135,6 +135,7 @@ QUIC_EXPORT_PRIVATE std::ostream& operator<<(
     std::ostream& os, const HttpDatagramSupport& http_datagram_support);
 
 // A QUIC session for HTTP.
+// 对于HTTP的一个QUIC session
 class QUIC_EXPORT_PRIVATE QuicSpdySession
     : public QuicSession,
       public QpackEncoder::DecoderStreamErrorDelegate,

@@ -4,12 +4,16 @@
 
 // The entity that handles framing writes for a Quic client or server.
 // Each QuicSession will have a connection associated with it.
+// 这个实体处理framing的写入，对于一个Quic client或者server，每个QuicSession都有一个connection
+// 和它关联
 //
 // On the server side, the Dispatcher handles the raw reads, and hands off
 // packets via ProcessUdpPacket for framing and processing.
+// 在服务端，Dispatcher负责处理raw reads，以及通过ProcessUdpPacket提交packets用于framing以及处理
 //
 // On the client side, the Connection handles the raw reads, as well as the
 // processing.
+// 在客户端，Connections处理raw reads以及处理
 //
 // Note: this class is not thread-safe.
 
@@ -129,6 +133,8 @@ class QUIC_EXPORT_PRIVATE QuicConnectionVisitorInterface {
   // or the server receives a connectivity probing packet.
   // |is_connectivity_probe| is true if the received packet is a connectivity
   // probe.
+  // 当从连接接收到一个packet的时候被调用，在检查和解析之后，只有在client收到一个合法的包
+  // 或者server收到一个连接探测包的时候被调用
   virtual void OnPacketReceived(const QuicSocketAddress& self_address,
                                 const QuicSocketAddress& peer_address,
                                 bool is_connectivity_probe) = 0;

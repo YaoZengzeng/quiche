@@ -57,6 +57,7 @@ class QUIC_NO_EXPORT QuicBufferedPacketStore {
   };
 
   // A queue of BufferedPackets for a connection.
+  // 一个连接的BufferedPackets的队列
   struct QUIC_NO_EXPORT BufferedPacketList {
     BufferedPacketList();
     BufferedPacketList(BufferedPacketList&& other);
@@ -68,6 +69,7 @@ class QUIC_NO_EXPORT QuicBufferedPacketStore {
     std::list<BufferedPacket> buffered_packets;
     QuicTime creation_time;
     // The ALPNs from the CHLO, if found.
+    // 来自CHLO的ALPNs，如果找到的话
     std::vector<std::string> alpns;
     std::string sni;
     // Indicating whether this is an IETF QUIC connection.
@@ -148,9 +150,12 @@ class QUIC_NO_EXPORT QuicBufferedPacketStore {
   // Delivers buffered packets for next connection with CHLO to open.
   // Return connection id for next connection in |connection_id|
   // and all buffered packets including CHLO.
+  // 将缓存的包传递到下一个用CHLO打开的连接
   // The returned list should at least has one packet(CHLO) if
   // store does have any connection to open. If no connection in the store has
   // received CHLO yet, empty list will be returned.
+  // 返回的列表至少得有一个包（CHLO），如果store有连接要打开，如果在store中没有连接
+  // 已经接受到了CHLO，会返回空的列表
   BufferedPacketList DeliverPacketsForNextConnection(
       QuicConnectionId* connection_id);
 

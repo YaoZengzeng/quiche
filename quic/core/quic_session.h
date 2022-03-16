@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 // A QuicSession, which demuxes a single connection to individual streams.
+// 一个QuicSession将单个的连接复用到独立的streams
 
 #ifndef QUICHE_QUIC_CORE_QUIC_SESSION_H_
 #define QUICHE_QUIC_CORE_QUIC_SESSION_H_
@@ -68,6 +69,8 @@ class QUIC_EXPORT_PRIVATE QuicSession
   // An interface from the session to the entity owning the session.
   // This lets the session notify its owner (the Dispatcher) when the connection
   // is closed, blocked, or added/removed from the time-wait list.
+  // 这个接口能让session通知它的owner（即Dispatcher）当连接被关闭、阻塞、或者从time-wait list中
+  // 添加或者移除的时候
   class QUIC_EXPORT_PRIVATE Visitor {
    public:
     virtual ~Visitor() {}
@@ -205,6 +208,7 @@ class QUIC_EXPORT_PRIVATE QuicSession
   virtual void OnCanCreateNewOutgoingStream(bool /*unidirectional*/) {}
 
   // Called on every incoming packet. Passes |packet| through to |connection_|.
+  // 在每个incoming packet的时候调用，传递|packet|到|connection_|
   virtual void ProcessUdpPacket(const QuicSocketAddress& self_address,
                                 const QuicSocketAddress& peer_address,
                                 const QuicReceivedPacket& packet);
@@ -875,6 +879,7 @@ class QUIC_EXPORT_PRIVATE QuicSession
   absl::flat_hash_map<QuicStreamId, QuicStreamOffset>
       locally_closed_streams_highest_offset_;
 
+  // 包含了一个QuicConnection的成员
   QuicConnection* connection_;
 
   // Store perspective on QuicSession during the constructor as it may be needed

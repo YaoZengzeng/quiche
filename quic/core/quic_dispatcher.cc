@@ -1225,6 +1225,7 @@ void QuicDispatcher::OnExpiredPackets(
 
 void QuicDispatcher::ProcessBufferedChlos(size_t max_connections_to_create) {
   // Reset the counter before starting creating connections.
+  // 在开始创建connections之前重置counter
   new_sessions_allowed_per_event_loop_ = max_connections_to_create;
   for (; new_sessions_allowed_per_event_loop_ > 0;
        --new_sessions_allowed_per_event_loop_) {
@@ -1232,6 +1233,7 @@ void QuicDispatcher::ProcessBufferedChlos(size_t max_connections_to_create) {
     BufferedPacketList packet_list =
         buffered_packets_.DeliverPacketsForNextConnection(
             &server_connection_id);
+    // 从packet_list中获取一系列缓存的packets
     const std::list<BufferedPacket>& packets = packet_list.buffered_packets;
     if (packets.empty()) {
       return;
@@ -1240,6 +1242,7 @@ void QuicDispatcher::ProcessBufferedChlos(size_t max_connections_to_create) {
     server_connection_id = MaybeReplaceServerConnectionId(server_connection_id,
                                                           packet_list.version);
     std::string alpn = SelectAlpn(packet_list.alpns);
+    // 构建QuicSession
     std::unique_ptr<QuicSession> session =
         CreateQuicSession(server_connection_id, packets.front().self_address,
                           packets.front().peer_address, alpn,
@@ -1261,6 +1264,7 @@ void QuicDispatcher::ProcessBufferedChlos(size_t max_connections_to_create) {
     } else if (support_multiple_cid_per_connection_) {
       ++num_sessions_in_session_map_;
     }
+    // 将包转发到session
     DeliverPacketsToSession(packets, insertion_result.first->second.get());
   }
 }

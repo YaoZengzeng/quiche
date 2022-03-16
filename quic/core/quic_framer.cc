@@ -1488,6 +1488,7 @@ bool QuicFramer::ProcessPacketInternal(const QuicEncryptedPacket& packet) {
     QUIC_DVLOG(1) << ENDPOINT << "Processing IETF QUIC packet.";
   }
 
+  // 调用visitor的OnPacket()函数
   visitor_->OnPacket();
 
   QuicPacketHeader header;
@@ -1506,6 +1507,7 @@ bool QuicFramer::ProcessPacketInternal(const QuicEncryptedPacket& packet) {
   }
 
   if (IsVersionNegotiation(header, packet_has_ietf_packet_header)) {
+    // 判断当前的角色是Client还是Server
     if (perspective_ == Perspective::IS_CLIENT) {
       QUIC_DVLOG(1) << "Client received version negotiation packet";
       return ProcessVersionNegotiationPacket(&reader, header);
@@ -2023,6 +2025,7 @@ bool QuicFramer::ProcessDataPacket(QuicDataReader* encrypted_reader,
   }
 
   // Handle the payload.
+  // 处理paylaod
   if (!ProcessFrameData(&reader, *header)) {
     QUICHE_DCHECK_NE(QUIC_NO_ERROR,
                      error_);  // ProcessFrameData sets the error.
@@ -2950,6 +2953,7 @@ bool QuicFramer::ProcessFrameData(QuicDataReader* reader,
     }
 
     switch (frame_type) {
+      // 根据FRAME的类型进行处理
       case PADDING_FRAME: {
         QuicPaddingFrame frame;
         ProcessPaddingFrame(reader, &frame);
@@ -3079,6 +3083,7 @@ bool QuicFramer::ProcessFrameData(QuicDataReader* reader,
         }
         QUIC_DVLOG(2) << ENDPOINT << "Processing message frame "
                       << message_frame;
+        // 当收到message frame的时候进行处理
         if (!visitor_->OnMessageFrame(message_frame)) {
           QUIC_DVLOG(1) << ENDPOINT
                         << "Visitor asked to stop further processing.";
