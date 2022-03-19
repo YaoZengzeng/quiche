@@ -49,6 +49,7 @@ class QuicSpdySession;
 class WebTransportHttp3;
 
 // A QUIC stream that can send and receive HTTP2 (SPDY) headers.
+// 一个QUIC stream可以发送以及接受HTTP2 (SPDY) headers
 class QUIC_EXPORT_PRIVATE QuicSpdyStream
     : public QuicStream,
       public CapsuleParser::Visitor,

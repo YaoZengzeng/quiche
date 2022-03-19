@@ -236,6 +236,7 @@ void QuicSession::PendingStreamOnStopSendingFrame(
 
 void QuicSession::OnStreamFrame(const QuicStreamFrame& frame) {
   QuicStreamId stream_id = frame.stream_id;
+  // 查看frame id是否合法
   if (stream_id == QuicUtils::GetInvalidStreamId(transport_version())) {
     connection()->CloseConnection(
         QUIC_INVALID_STREAM_ID, "Received data for an invalid stream",
@@ -251,6 +252,7 @@ void QuicSession::OnStreamFrame(const QuicStreamFrame& frame) {
     return;
   }
 
+  // 获取或者创建Stream
   QuicStream* stream = GetOrCreateStream(stream_id);
 
   if (!stream) {
@@ -1927,6 +1929,7 @@ QuicStream* QuicSession::GetOrCreateStream(const QuicStreamId stream_id) {
     return nullptr;
   }
 
+  // 创建一个incoming stream
   return CreateIncomingStream(stream_id);
 }
 

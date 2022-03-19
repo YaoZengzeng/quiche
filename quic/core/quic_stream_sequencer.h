@@ -22,9 +22,11 @@ class QuicStreamSequencerPeer;
 
 // Buffers frames until we have something which can be passed
 // up to the next layer.
+// 缓存frames，直到我们积累了足够的东西能够传递给下一层
 class QUIC_EXPORT_PRIVATE QuicStreamSequencer {
  public:
   // Interface that thie Sequencer uses to communicate with the Stream.
+  // Sequencer用来和Stream进行交互的接口
   class QUIC_EXPORT_PRIVATE StreamInterface {
    public:
     virtual ~StreamInterface() = default;
@@ -177,6 +179,7 @@ class QUIC_EXPORT_PRIVATE QuicStreamSequencer {
   void MaybeCloseStream();
 
   // Shared implementation between OnStreamFrame and OnCryptoFrame.
+  // 由OnStreamFrame和OnCryptoFrame共享的实现
   void OnFrameData(QuicStreamOffset byte_offset,
                    size_t data_len,
                    const char* data_buffer);

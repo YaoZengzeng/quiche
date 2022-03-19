@@ -77,6 +77,7 @@ class QuicConnectionPeer;
 
 // Class that receives callbacks from the connection when frames are received
 // and when other interesting events happen.
+// 当接收到frames或者其他有趣的事件发生时，connection调用的callbacks
 class QUIC_EXPORT_PRIVATE QuicConnectionVisitorInterface {
  public:
   virtual ~QuicConnectionVisitorInterface() {}

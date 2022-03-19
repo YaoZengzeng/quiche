@@ -472,6 +472,9 @@ class QUIC_EXPORT_PRIVATE QuicSpdySession
   // Override CreateIncomingStream(), CreateOutgoingBidirectionalStream() and
   // CreateOutgoingUnidirectionalStream() with QuicSpdyStream return type to
   // make sure that all data streams are QuicSpdyStreams.
+  // 覆盖CreateIncomingStream()，CreateOutgoingBidirectionalStream()以及
+  // CreateOutgoingUnidirectionalStream()，将QuicSpdyStream作为返回值
+  // 来确保所有的data streams都为QuicSpdyStreams
   QuicSpdyStream* CreateIncomingStream(QuicStreamId id) override = 0;
   QuicSpdyStream* CreateIncomingStream(PendingStream* pending) override = 0;
   virtual QuicSpdyStream* CreateOutgoingBidirectionalStream() = 0;

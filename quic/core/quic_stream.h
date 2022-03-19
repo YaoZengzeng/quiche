@@ -195,6 +195,7 @@ class QUIC_EXPORT_PRIVATE QuicStream
 
   // Called by the session when a (potentially duplicate) stream frame has been
   // received for this stream.
+  // 由session调用，当从一个stream接收到一个stream frame时
   virtual void OnStreamFrame(const QuicStreamFrame& frame);
 
   // Called by the session when the connection becomes writeable to allow the

@@ -76,6 +76,7 @@ class QUIC_EXPORT_PRIVATE QuicSession
     virtual ~Visitor() {}
 
     // Called when the connection is closed after the streams have been closed.
+    // 当streams已经被关闭之后连接被关闭的时候调用
     virtual void OnConnectionClosed(QuicConnectionId server_connection_id,
                                     QuicErrorCode error,
                                     const std::string& error_details,
@@ -122,6 +123,7 @@ class QUIC_EXPORT_PRIVATE QuicSession
   virtual const QuicCryptoStream* GetCryptoStream() const = 0;
 
   // QuicConnectionVisitorInterface methods:
+  // QuicConnectionVisitorInterface的方法
   void OnStreamFrame(const QuicStreamFrame& frame) override;
   void OnCryptoFrame(const QuicCryptoFrame& frame) override;
   void OnRstStream(const QuicRstStreamFrame& frame) override;
