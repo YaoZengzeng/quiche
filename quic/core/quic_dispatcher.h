@@ -66,6 +66,8 @@ class QUIC_NO_EXPORT QuicDispatcher
 
   // Process the incoming packet by creating a new session, passing it to
   // an existing session, or passing it to the time wait list.
+  // 通过创建一个新的session，传递到一个已经存在的session，或者传递到time wait list的方式
+  // 来处理incoming packet
   void ProcessPacket(const QuicSocketAddress& self_address,
                      const QuicSocketAddress& peer_address,
                      const QuicReceivedPacket& packet) override;
@@ -190,6 +192,9 @@ class QUIC_NO_EXPORT QuicDispatcher
   // Returns true if packet is dropped or successfully dispatched (e.g.,
   // processed by existing session, processed by time wait list, etc.),
   // otherwise, returns false and the packet needs further processing.
+  // 试着校验以及分发packet，基于已有的信息，返回true，如果包被丢弃或者成功分发了
+  // （例如被已经存在的session处理，被time wait list处理，等等），否则返回false
+  // packet需要进一步的处理
   virtual bool MaybeDispatchPacket(const ReceivedPacketInfo& packet_info);
 
   // Generate a connection ID with a length that is expected by the dispatcher.
@@ -250,6 +255,7 @@ class QUIC_NO_EXPORT QuicDispatcher
   virtual QuicTimeWaitListManager* CreateQuicTimeWaitListManager();
 
   // Buffers packet until it can be delivered to a connection.
+  // 缓存packet，直到它可以被传递给一个连接
   void BufferEarlyPacket(const ReceivedPacketInfo& packet_info);
 
   // Called when |packet_info| is the last received packet of the client hello.

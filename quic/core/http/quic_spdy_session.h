@@ -168,6 +168,7 @@ class QUIC_EXPORT_PRIVATE QuicSpdySession
   // Called by |headers_stream_| when headers have been completely received
   // for a stream.  |fin| will be true if the fin flag was set in the headers
   // frame.
+  // 当一个stream的headers已经完全被接收的时候使用，由|headers_stream_|调用
   virtual void OnStreamHeaderList(QuicStreamId stream_id, bool fin,
                                   size_t frame_len,
                                   const QuicHeaderList& header_list);
@@ -410,6 +411,7 @@ class QUIC_EXPORT_PRIVATE QuicSpdySession
   void UnregisterHttp3DatagramFlowId(QuicDatagramStreamId flow_id);
 
   // Override from QuicSession to support HTTP/3 datagrams.
+  // 覆盖QuicSession来支持HTTP/3的datagrams
   void OnMessageReceived(absl::string_view message) override;
 
   // Indicates whether the HTTP/3 session supports WebTransport.

@@ -1475,6 +1475,7 @@ bool QuicFramer::ProcessPacket(const QuicEncryptedPacket& packet) {
 }
 
 bool QuicFramer::ProcessPacketInternal(const QuicEncryptedPacket& packet) {
+  // 构建QuicDataReader
   QuicDataReader reader(packet.data(), packet.length());
 
   bool packet_has_ietf_packet_header = false;
@@ -1492,6 +1493,7 @@ bool QuicFramer::ProcessPacketInternal(const QuicEncryptedPacket& packet) {
   visitor_->OnPacket();
 
   QuicPacketHeader header;
+  // 读取header并且填充
   if (!ProcessPublicHeader(&reader, packet_has_ietf_packet_header, &header)) {
     QUICHE_DCHECK_NE("", detailed_error_);
     QUIC_DVLOG(1) << ENDPOINT << "Unable to process public header. Error: "
@@ -1548,6 +1550,7 @@ bool QuicFramer::ProcessPacketInternal(const QuicEncryptedPacket& packet) {
       rv = ProcessIetfDataPacket(&reader, &header, packet, buffer,
                                  ABSL_ARRAYSIZE(buffer));
     } else {
+      // 处理data packet
       rv = ProcessDataPacket(&reader, &header, packet, buffer,
                              ABSL_ARRAYSIZE(buffer));
     }
@@ -1964,6 +1967,7 @@ bool QuicFramer::ProcessDataPacket(QuicDataReader* encrypted_reader,
                                    const QuicEncryptedPacket& packet,
                                    char* decrypted_buffer,
                                    size_t buffer_length) {
+  // 处理packet的header
   if (!ProcessUnauthenticatedHeader(encrypted_reader, header)) {
     QUICHE_DCHECK_NE("", detailed_error_);
     QUIC_DVLOG(1)
@@ -1985,6 +1989,7 @@ bool QuicFramer::ProcessDataPacket(QuicDataReader* encrypted_reader,
 
   size_t decrypted_length = 0;
   EncryptionLevel decrypted_level;
+  // 对payload进行解密
   if (!DecryptPayload(packet.length(), encrypted, associated_data, *header,
                       decrypted_buffer, buffer_length, &decrypted_length,
                       &decrypted_level)) {
@@ -1996,6 +2001,7 @@ bool QuicFramer::ProcessDataPacket(QuicDataReader* encrypted_reader,
         QuicEncryptedPacket(encrypted_reader->FullPayload()), decryption_level,
         has_decryption_key);
     RecordDroppedPacketReason(DroppedPacketReason::DECRYPTION_FAILURE);
+    // 解密失败
     set_detailed_error(absl::StrCat("Unable to decrypt ",
                                     EncryptionLevelToString(decryption_level),
                                     " payload."));
@@ -2014,6 +2020,7 @@ bool QuicFramer::ProcessDataPacket(QuicDataReader* encrypted_reader,
     largest_packet_number_.UpdateMax(header->packet_number);
   }
 
+  // 调用visitor_对PacketHeader进行处理
   if (!visitor_->OnPacketHeader(*header)) {
     // The visitor suppresses further processing of the packet.
     return true;
@@ -2035,6 +2042,7 @@ bool QuicFramer::ProcessDataPacket(QuicDataReader* encrypted_reader,
     return false;
   }
 
+  // 调用visitor，Packet处理完成
   visitor_->OnPacketComplete();
   return true;
 }
@@ -2920,6 +2928,7 @@ bool QuicFramer::ProcessFrameData(QuicDataReader* reader,
                                      : kQuicFrameTypeBrokenMask;
     if (frame_type & special_mask) {
       // Stream Frame
+      // 这是一个stream frame
       if (frame_type & kQuicFrameTypeStreamMask) {
         QuicStreamFrame frame;
         if (!ProcessStreamFrame(reader, frame_type, &frame)) {
@@ -2936,6 +2945,7 @@ bool QuicFramer::ProcessFrameData(QuicDataReader* reader,
       }
 
       // Ack Frame
+      // 这是一个ack frame
       if (frame_type & kQuicFrameTypeAckMask) {
         if (!ProcessAckFrame(reader, frame_type)) {
           return RaiseError(QUIC_INVALID_ACK_DATA);
@@ -3111,6 +3121,7 @@ bool QuicFramer::ProcessFrameData(QuicDataReader* reader,
       }
       case HANDSHAKE_DONE_FRAME: {
         // HANDSHAKE_DONE has no payload.
+        // HANDSHAKE_DONE类型的frame没有payload
         QuicHandshakeDoneFrame handshake_done_frame;
         QUIC_DVLOG(2) << ENDPOINT << "Processing handshake done frame "
                       << handshake_done_frame;

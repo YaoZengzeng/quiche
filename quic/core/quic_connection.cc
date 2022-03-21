@@ -2098,6 +2098,8 @@ bool QuicConnection::OnMessageFrame(const QuicMessageFrame& frame) {
 
   // Since a message frame was received, this is not a connectivity probe.
   // A probe only contains a PING and full padding.
+  // 因为已经收到了一个message frame，说明这不是一个connectivity probe
+  // 一个Probe只包含一个PING和full padding
   if (!UpdatePacketContent(MESSAGE_FRAME)) {
     return false;
   }
@@ -2741,6 +2743,7 @@ void QuicConnection::ProcessUdpPacket(const QuicSocketAddress& self_address,
   if (!connected_) {
     return;
   }
+  // 收到加密的packet.length()字节
   QUIC_DVLOG(2) << ENDPOINT << "Received encrypted " << packet.length()
                 << " bytes:" << std::endl
                 << quiche::QuicheTextUtils::HexDump(
@@ -2813,10 +2816,12 @@ void QuicConnection::ProcessUdpPacket(const QuicSocketAddress& self_address,
     current_packet_data_ = nullptr;
     is_current_packet_connectivity_probing_ = false;
 
+    // 可能处理合并的包
     MaybeProcessCoalescedPackets();
     return;
   }
 
+  // 包处理完成
   ++stats_.packets_processed;
 
   QUIC_DLOG_IF(INFO, active_effective_peer_migration_type_ != NO_CHANGE)

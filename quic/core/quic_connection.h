@@ -581,8 +581,10 @@ class QUIC_EXPORT_PRIVATE QuicConnection
 
   // Processes an incoming UDP packet (consisting of a QuicEncryptedPacket) from
   // the peer.
+  // 处理一个到来的来自对端的UDP packet（由一个QuicEncryptedPacket组成）
   // In a client, the packet may be "stray" and have a different connection ID
   // than that of this connection.
+  // 在客户端中，packet可能是走失的，有着一个和这个连接不同的connection ID
   virtual void ProcessUdpPacket(const QuicSocketAddress& self_address,
                                 const QuicSocketAddress& peer_address,
                                 const QuicReceivedPacket& packet);
@@ -1799,6 +1801,7 @@ class QUIC_EXPORT_PRIVATE QuicConnection
                         const QuicSocketAddress& effective_peer_address);
 
   // Update both connection's and packet creator's peer address.
+  // 同时更新Connection和packet creator的peer address
   void UpdatePeerAddress(QuicSocketAddress peer_address);
 
   // Send PING at encryption level.

@@ -387,6 +387,7 @@ void QuicDispatcher::ProcessPacket(const QuicSocketAddress& self_address,
                 << " bytes:" << std::endl
                 << quiche::QuicheTextUtils::HexDump(
                        absl::string_view(packet.data(), packet.length()));
+  // 构建ReceivedPacketInfo
   ReceivedPacketInfo packet_info(self_address, peer_address, packet);
   std::string detailed_error;
   bool retry_token_present;
@@ -587,6 +588,7 @@ bool QuicDispatcher::MaybeDispatchPacket(
 
   // Packets with connection IDs for active connections are processed
   // immediately.
+  // 针对active connections的有着connection IDs的包被立即处理
   auto it = reference_counted_session_map_.find(server_connection_id);
   if (it != reference_counted_session_map_.end()) {
     QUICHE_DCHECK(!buffered_packets_.HasBufferedPackets(server_connection_id));
@@ -608,6 +610,7 @@ bool QuicDispatcher::MaybeDispatchPacket(
         }
       }
     }
+    // 调用ProcessUdpPakcet
     it->second->ProcessUdpPacket(packet_info.self_address,
                                  packet_info.peer_address, packet_info.packet);
     return true;
@@ -646,6 +649,7 @@ bool QuicDispatcher::MaybeDispatchPacket(
 
   if (time_wait_list_manager_->IsConnectionIdInTimeWait(server_connection_id)) {
     // This connection ID is already in time-wait state.
+    // connection ID已经位于time-wait state中
     time_wait_list_manager_->ProcessPacket(
         packet_info.self_address, packet_info.peer_address,
         packet_info.destination_connection_id, packet_info.form,
@@ -752,6 +756,7 @@ void QuicDispatcher::ProcessHeader(ReceivedPacketInfo* packet_info) {
     case kFateTimeWait:
       // Add this connection_id to the time-wait state, to safely reject
       // future packets.
+      // 将这个connection_id加入到time-wait state，从而安全的拒绝以后的packets
       QUIC_DLOG(INFO) << "Adding connection ID " << server_connection_id
                       << " to time-wait list.";
       QUIC_CODE_COUNT(quic_reject_fate_time_wait);

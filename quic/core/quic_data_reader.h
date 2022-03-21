@@ -19,6 +19,8 @@ namespace quic {
 // Used for reading QUIC data. Though there isn't really anything terribly
 // QUIC-specific here, it's a helper class that's useful when doing QUIC
 // framing.
+// 在读取QUIC数据的时候使用，尽管没有任何QUIC特定的操作，它是一个helper class，在进行
+// QUIC framing的时候操作
 //
 // To use, simply construct a QuicDataReader using the underlying buffer that
 // you'd like to read fields from, then call one of the Read*() methods to

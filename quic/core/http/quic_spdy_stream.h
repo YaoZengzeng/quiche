@@ -114,9 +114,11 @@ class QUIC_EXPORT_PRIVATE QuicSpdyStream
 
   // Called by the sequencer when new data is available. Decodes the data and
   // calls OnBodyAvailable() to pass to the upper layer.
+  // 当有新的数据可用时，被sequencer调用，解码数据并且调用OnBodyAvailable()来传递到上层
   void OnDataAvailable() override;
 
   // Called in OnDataAvailable() after it finishes the decoding job.
+  // 在OnDataAvailable()中被调用，当它完成解码操作时
   virtual void OnBodyAvailable() = 0;
 
   // Writes the headers contained in |header_block| on the dedicated headers
@@ -351,6 +353,7 @@ class QUIC_EXPORT_PRIVATE QuicSpdyStream
  protected:
   // Called when the received headers are too large. By default this will
   // reset the stream.
+  // 当收到的headers太大时被调用，默认情况下，这会重置stream
   virtual void OnHeadersTooLarge();
 
   virtual void OnInitialHeadersComplete(bool fin, size_t frame_len,

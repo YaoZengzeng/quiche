@@ -37,6 +37,7 @@ struct QUIC_EXPORT_PRIVATE QuicMessageFrame {
 
   // message_id is only used on the sender side and does not get serialized on
   // wire.
+  // message_id只在发送端被使用并且不会序列化
   QuicMessageId message_id = 0;
   // Not owned, only used on read path.
   const char* data = nullptr;
@@ -44,6 +45,7 @@ struct QUIC_EXPORT_PRIVATE QuicMessageFrame {
   QuicPacketLength message_length = 0;
 
   // The actual message data which is reference counted, used on write path.
+  // 真正的message data，它是引用计数的
   QuicMessageData message_data;
 };
 

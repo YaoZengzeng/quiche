@@ -429,6 +429,7 @@ struct QUIC_EXPORT_PRIVATE QuicPerPacketContext {
 
 // ReceivedPacketInfo comprises information obtained by parsing the unencrypted
 // bytes of a received packet.
+// ReceivedPacketInfo包括通过解析一个接手到的包的非加密部分获取来的信息
 struct QUIC_EXPORT_PRIVATE ReceivedPacketInfo {
   ReceivedPacketInfo(const QuicSocketAddress& self_address,
                      const QuicSocketAddress& peer_address,

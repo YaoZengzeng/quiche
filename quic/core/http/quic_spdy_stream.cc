@@ -516,6 +516,7 @@ void QuicSpdyStream::OnStreamHeaderList(bool fin, size_t frame_len,
         break;
       }
     }
+    // 设置user agent id
     spdy_session()->SetUserAgentId(std::move(uaid));
   }
 
@@ -533,6 +534,7 @@ void QuicSpdyStream::OnStreamHeaderList(bool fin, size_t frame_len,
     }
   }
   if (!headers_decompressed_) {
+    // 如果Header没有被解压缩
     OnInitialHeadersComplete(fin, frame_len, header_list);
   } else {
     OnTrailingHeadersComplete(fin, frame_len, header_list);

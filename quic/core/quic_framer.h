@@ -83,6 +83,7 @@ class QUIC_EXPORT_PRIVATE QuicFramerVisitorInterface {
 
   // Called when a new packet has been received, before it
   // has been validated or processed.
+  // 当有一个新的packet接收到的时候被调用，在它被校验和处理之前
   virtual void OnPacket() = 0;
 
   // Called when a public reset packet has been parsed but has not yet
@@ -453,6 +454,7 @@ class QUIC_EXPORT_PRIVATE QuicFramer {
   // Parses the unencrypted fields in |packet| and stores them in the other
   // parameters. This can only be called on the server.
   // |expected_destination_connection_id_length| is only used for short headers.
+  // 解析|packet|中的非加密部分并且将它们存储在其他参数中，这只能在server中被调用
   static QuicErrorCode ParsePublicHeaderDispatcher(
       const QuicEncryptedPacket& packet,
       uint8_t expected_destination_connection_id_length,

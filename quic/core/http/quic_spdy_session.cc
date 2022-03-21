@@ -567,6 +567,7 @@ void QuicSpdySession::OnStreamHeaderList(QuicStreamId stream_id, bool fin,
         ConnectionCloseBehavior::SEND_CONNECTION_CLOSE_PACKET);
     return;
   }
+  // 获取spdy data strea,
   QuicSpdyStream* stream = GetOrCreateSpdyDataStream(stream_id);
   if (stream == nullptr) {
     // The stream no longer exists, but trailing headers may contain the final
