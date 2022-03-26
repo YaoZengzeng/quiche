@@ -1969,6 +1969,7 @@ bool WriteServerVersionNegotiationProbeResponse(
     uint8_t source_connection_id_length);
 
 // Implementation of Http3DatagramVisitor which saves all received datagrams.
+// Http3DatagramVisitor的实现，它保存所有接收到的datagrams
 class SavingHttp3DatagramVisitor : public QuicSpdyStream::Http3DatagramVisitor {
  public:
   struct SavedHttp3Datagram {
@@ -1988,6 +1989,7 @@ class SavingHttp3DatagramVisitor : public QuicSpdyStream::Http3DatagramVisitor {
   void OnHttp3Datagram(QuicStreamId stream_id,
                        absl::optional<QuicDatagramContextId> context_id,
                        absl::string_view payload) override {
+    // 将收到的datagrams加入received_h3_datagrams_
     received_h3_datagrams_.push_back(
         SavedHttp3Datagram{stream_id, context_id, std::string(payload)});
   }

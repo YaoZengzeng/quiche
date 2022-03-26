@@ -165,6 +165,8 @@ class AlpsFrameDecoder : public HttpDecoder::Visitor {
 
 // A SpdyFramerVisitor that passes HEADERS frames to the QuicSpdyStream, and
 // closes the connection if any unexpected frames are received.
+// 一个SpdyFramerVisitor，将HEADERS frames传递给QuicSpdyStream并且关闭连接，如果接收到了
+// 任何unexpected frames
 class QuicSpdySession::SpdyFramerVisitor
     : public SpdyFramerVisitorInterface,
       public SpdyFramerDebugVisitorInterface {
@@ -1714,6 +1716,7 @@ void QuicSpdySession::OnMessageReceived(absl::string_view message) {
   }
   QuicDataReader reader(message);
   uint64_t stream_id64;
+  // 从message中读取stream id
   if (!reader.ReadVarInt62(&stream_id64)) {
     QUIC_DLOG(ERROR) << "Failed to parse stream ID in received HTTP/3 datagram";
     return;
@@ -1740,6 +1743,7 @@ void QuicSpdySession::OnMessageReceived(absl::string_view message) {
     return;
   }
   QuicStreamId stream_id = static_cast<QuicStreamId>(stream_id64);
+  // 根据stream id获取QuicSpdyStream
   QuicSpdyStream* stream =
       static_cast<QuicSpdyStream*>(GetActiveStream(stream_id));
   if (stream == nullptr) {
@@ -1749,6 +1753,7 @@ void QuicSpdySession::OnMessageReceived(absl::string_view message) {
     // period of time in case they were reordered.
     return;
   }
+  // 调用stream的OnDatagramReceived函数
   stream->OnDatagramReceived(&reader);
 }
 

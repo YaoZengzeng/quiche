@@ -20,6 +20,7 @@
 namespace quic {
 
 // A simple class that accumulates header pairs
+// 一个简单的类用于积累header pairs
 class QUIC_EXPORT_PRIVATE QuicHeaderList
     : public spdy::SpdyHeadersHandlerInterface {
  public:

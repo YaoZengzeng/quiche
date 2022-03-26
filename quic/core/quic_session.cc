@@ -67,6 +67,7 @@ QuicSession::QuicSession(
                   num_expected_unidirectional_static_streams, nullptr) {}
 
 QuicSession::QuicSession(
+    // 基于QuicConnection，Visitor进行初始化
     QuicConnection* connection, Visitor* owner, const QuicConfig& config,
     const ParsedQuicVersionVector& supported_versions,
     QuicStreamCount num_expected_unidirectional_static_streams,

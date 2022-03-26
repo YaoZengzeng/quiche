@@ -16,6 +16,7 @@ namespace quic {
 
 // All this does right now is aggregate data, and on fin, send an HTTP
 // response.
+// 这个类现在做的所有事情就是聚合数据，并且在fin的时候，发送一个HTTP response
 class QuicSimpleServerStream : public QuicSpdyServerStreamBase,
                                public QuicSimpleServerBackend::RequestHandler {
  public:

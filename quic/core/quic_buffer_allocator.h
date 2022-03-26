@@ -15,6 +15,7 @@
 namespace quic {
 
 // Abstract base class for classes which allocate and delete buffers.
+// 抽象的基类用于分配以及删除缓存的类
 class QUIC_EXPORT_PRIVATE QuicBufferAllocator {
  public:
   virtual ~QuicBufferAllocator();

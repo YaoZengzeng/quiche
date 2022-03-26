@@ -119,6 +119,8 @@ class QUIC_EXPORT_PRIVATE QuicStreamSequencer {
   // Calls |OnDataAvailable| on |stream_| if there is buffered data that can
   // be processed, and causes |OnDataAvailable| to be called as new data
   // arrives.
+  // 在|stream_|中调用|OnDataAvailable|，如果有缓存的数据能够被处理，并且导致|OnDataAvailable|
+  // 被调用，当有新的数据导到的时候
   void SetUnblocked();
 
   // Blocks processing of frames until |SetUnblocked| is called.

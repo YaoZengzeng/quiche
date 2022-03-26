@@ -25,11 +25,14 @@ class QuicSpdyStream;
 
 // A session of WebTransport over HTTP/3.  The session is owned by
 // QuicSpdyStream object for the CONNECT stream that established it.
+// 一个基于HTTP/3的WebTransport的session，这个session由QuicSpdyStream对象所有
+// 用于CONNECT stream建立连接
 //
 // WebTransport over HTTP/3 specification:
 // <https://datatracker.ietf.org/doc/html/draft-ietf-webtrans-http3>
 class QUIC_EXPORT_PRIVATE WebTransportHttp3
     : public WebTransportSession,
+      // 继承了QuicSpdyStream::Http3DatagramVisitor
       public QuicSpdyStream::Http3DatagramRegistrationVisitor,
       public QuicSpdyStream::Http3DatagramVisitor {
  public:

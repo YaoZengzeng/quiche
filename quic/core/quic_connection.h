@@ -450,12 +450,14 @@ class QUIC_EXPORT_PRIVATE QuicConnectionHelperInterface {
   virtual ~QuicConnectionHelperInterface() {}
 
   // Returns a QuicClock to be used for all time related functions.
+  // 返回一个QuicClock用于所有时间相关的函数
   virtual const QuicClock* GetClock() const = 0;
 
   // Returns a QuicRandom to be used for all random number related functions.
   virtual QuicRandom* GetRandomGenerator() = 0;
 
   // Returns a QuicBufferAllocator to be used for stream send buffers.
+  // 返回一个QuicBufferAllocator用于stream send buffers
   virtual QuicBufferAllocator* GetStreamSendBufferAllocator() = 0;
 };
 
@@ -550,6 +552,7 @@ class QUIC_EXPORT_PRIVATE QuicConnection
 
   // Send |frame| to the peer. Returns true if frame is consumed, false
   // otherwise.
+  // 发送|frame|到对端，返回true，如果frame被消费，否则返回false
   virtual bool SendControlFrame(const QuicFrame& frame);
 
   // Called when stream |id| is reset because of |error|.
@@ -1323,6 +1326,8 @@ class QUIC_EXPORT_PRIVATE QuicConnection
 
   // Sends a connection close packet to the peer and includes an ACK if the ACK
   // is not empty, the |error| is not PACKET_WRITE_ERROR, and it fits.
+  // 发送一个connection close packet到对端并且包含一个ACK，如果ACK不为空，|error|
+  // 不是PACKET_WRITE_ERROR
   // |ietf_error| may optionally be be used to directly specify the wire
   // error code. Otherwise if |ietf_error| is NO_IETF_QUIC_ERROR, the
   // QuicErrorCodeToTransportErrorCode mapping of |error| will be used.

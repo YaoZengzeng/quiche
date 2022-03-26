@@ -94,6 +94,8 @@ class QUIC_EXPORT_PRIVATE QuicSpdyStream
   // Called by the session when decompressed headers have been completely
   // delivered to this stream.  If |fin| is true, then this stream
   // should be closed; no more data will be sent by the peer.
+  // 当解压缩之后的headers已经完全被转发到这个stream的时候被调用，如果|fin|为true
+  // 则这个stream应该被关闭，没有更多的数据被peer发送了
   virtual void OnStreamHeaderList(bool fin, size_t frame_len,
                                   const QuicHeaderList& header_list);
 
@@ -202,6 +204,7 @@ class QUIC_EXPORT_PRIVATE QuicSpdyStream
   }
 
   // Returns true if headers have been fully read and consumed.
+  // 返回true，如果headers已经被完全读取并消费
   bool FinishedReadingHeaders() const;
 
   // Returns true if FIN has been received and either trailers have been fully
@@ -266,6 +269,7 @@ class QUIC_EXPORT_PRIVATE QuicSpdyStream
     // Called when an HTTP/3 datagram is received. |payload| does not contain
     // the stream or context IDs. Note that this contains the stream ID even if
     // flow IDs from draft-ietf-masque-h3-datagram-00 are in use.
+    // 当收到一个HTTP/3 datagram的时候被调用，|payload|不包含stream或者context IDs
     virtual void OnHttp3Datagram(
         QuicStreamId stream_id,
         absl::optional<QuicDatagramContextId> context_id,
@@ -428,6 +432,7 @@ class QUIC_EXPORT_PRIVATE QuicSpdyStream
   void HandleBodyAvailable();
 
   // Called when a datagram frame or capsule is received.
+  // 当一个datagram frame或者capsule接收到的时候被调用
   void HandleReceivedDatagram(absl::optional<QuicDatagramContextId> context_id,
                               absl::string_view payload);
 
@@ -503,6 +508,7 @@ class QUIC_EXPORT_PRIVATE QuicSpdyStream
   std::unique_ptr<WebTransportDataStream> web_transport_data_;
 
   // HTTP/3 Datagram support.
+  // 对于HTTP/3 Datagram的支持
   Http3DatagramRegistrationVisitor* datagram_registration_visitor_ = nullptr;
   Http3DatagramVisitor* datagram_no_context_visitor_ = nullptr;
   absl::optional<QuicDatagramStreamId> datagram_flow_id_;

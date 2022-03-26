@@ -87,6 +87,7 @@ class QUIC_EXPORT_PRIVATE WebTransportStream {
 };
 
 // Visitor that gets notified about events related to a WebTransport session.
+// 当收到相关的一个WebTransport session时会接收到通知
 class QUIC_EXPORT_PRIVATE WebTransportVisitor {
  public:
   virtual ~WebTransportVisitor() {}

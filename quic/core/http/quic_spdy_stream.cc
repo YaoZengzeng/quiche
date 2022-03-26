@@ -174,7 +174,9 @@ HttpDecoder::Options HttpDecoderOptionsForBidiStream(
 
 QuicSpdyStream::QuicSpdyStream(QuicStreamId id, QuicSpdySession* spdy_session,
                                StreamType type)
+      // 构建QuicStream
     : QuicStream(id, spdy_session, /*is_static=*/false, type),
+      // 设置spdy session
       spdy_session_(spdy_session),
       on_body_available_called_because_sequencer_is_closed_(false),
       visitor_(nullptr),
@@ -622,6 +624,7 @@ void QuicSpdyStream::OnInitialHeadersComplete(
 
   if (!GetQuicReloadableFlag(quic_verify_request_headers) ||
       !header_too_large) {
+    // 处理结束偶的哦啊的web transport headers
     MaybeProcessReceivedWebTransportHeaders();
   }
 
@@ -638,6 +641,7 @@ void QuicSpdyStream::OnInitialHeadersComplete(
     OnStreamFrame(
         QuicStreamFrame(id(), fin, /* offset = */ 0, absl::string_view()));
   }
+  // 结束对于Heades的读取
   if (FinishedReadingHeaders()) {
     sequencer()->SetUnblocked();
   }
@@ -1361,6 +1365,7 @@ void QuicSpdyStream::HandleReceivedDatagram(
     absl::string_view payload) {
   Http3DatagramVisitor* visitor;
   if (context_id.has_value()) {
+    // 根据context id找到对应的visitor
     auto it = datagram_context_visitors_.find(context_id.value());
     if (it == datagram_context_visitors_.end()) {
       QUIC_DLOG(ERROR) << ENDPOINT
@@ -1690,6 +1695,7 @@ void QuicSpdyStream::OnDatagramReceived(QuicDataReader* reader) {
     }
     context_id = parsed_context_id;
   }
+  // 获取payload
   absl::string_view payload = reader->ReadRemainingPayload();
   HandleReceivedDatagram(context_id, payload);
 }
